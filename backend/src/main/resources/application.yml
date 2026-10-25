@@ -1,0 +1,58 @@
+
+spring:
+  application:
+    name: voltmart-api
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://db.maxityertqcetznvvxlm.supabase.co:5432/postgres?sslmode=require}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 5
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: true
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+        default_batch_fetch_size: 32
+        format_sql: false
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:1025}
+    properties:
+      mail.smtp.auth: false
+  servlet:
+    multipart:
+      max-file-size: 8MB
+      max-request-size: 16MB
+
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    include-message: always
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:VoltMartDevSecretKeyThatIsAtLeastSixtyFourCharactersLongForHS512!!}
+    expiration-ms: 86400000
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:5173,http://127.0.0.1:5173,*}
+  payments:
+    mock-success-rate: 1.0
+  store:
+    name: VoltMart
+    support-email: support@voltmart.local
+    tax-rate: 0.18
+    free-shipping-threshold: 999.00
+
+logging:
+  level:
+    com.voltmart: INFO
+    org.springframework.security: WARN
